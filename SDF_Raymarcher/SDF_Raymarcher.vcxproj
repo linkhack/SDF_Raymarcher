@@ -18,6 +18,44 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Camera\Camera.cpp" />
+    <ClCompile Include="src\Geometry\Geometry.cpp" />
+    <ClCompile Include="src\Geometry\ProceduralGeometry.cpp" />
+    <ClCompile Include="src\Light\DirectionalLight.cpp" />
+    <ClCompile Include="src\Light\Light.cpp" />
+    <ClCompile Include="src\Light\LightManager.cpp" />
+    <ClCompile Include="src\Light\PointLight.cpp" />
+    <ClCompile Include="src\Light\SpotLight.cpp" />
+    <ClCompile Include="src\Material\Material.cpp" />
+    <ClCompile Include="src\Material\PBRMaterial.cpp" />
+    <ClCompile Include="src\Renderer\FBO.cpp" />
+    <ClCompile Include="src\Renderer\FrustumCull.cpp" />
+    <ClCompile Include="src\Renderer\FrustumPlane.cpp" />
+    <ClCompile Include="src\SDF_Raymarcher.cpp" />
+    <ClCompile Include="src\Shader\Shader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Camera\Camera.h" />
+    <ClInclude Include="src\Geometry\Geometry.h" />
+    <ClInclude Include="src\Light\DirectionalLight.h" />
+    <ClInclude Include="src\Light\Light.h" />
+    <ClInclude Include="src\Light\LightManager.h" />
+    <ClInclude Include="src\Light\PointLight.h" />
+    <ClInclude Include="src\Light\SpotLight.h" />
+    <ClInclude Include="src\Material\Material.h" />
+    <ClInclude Include="src\Material\PBRMaterial.h" />
+    <ClInclude Include="src\Renderer\FBO.h" />
+    <ClInclude Include="src\Renderer\FrustumCull.h" />
+    <ClInclude Include="src\Renderer\FrustumPlane.h" />
+    <ClInclude Include="src\Shader\Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shader\base.vert" />
+    <None Include="assets\shader\checker_board.frag" />
+    <None Include="assets\shader\ray_generation_test.frag" />
+    <None Include="assets\shader\sdf_sphere.frag" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{BB5AC6A7-F659-4833-944D-8EB23585BADE}</ProjectGuid>
@@ -74,7 +112,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -99,17 +137,20 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\Patrick\source\repos\SDF_Raymarcher\SDF_Raymarcher\external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Patrick\source\repos\SDF_Raymarcher\SDF_Raymarcher\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -142,26 +183,17 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\Patrick\source\repos\SDF_Raymarcher\SDF_Raymarcher\external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Patrick\source\repos\SDF_Raymarcher\SDF_Raymarcher\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="SDF_Raymarcher.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
