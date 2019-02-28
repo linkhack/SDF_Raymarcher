@@ -1,4 +1,6 @@
 #include "Shader.h"
+const std::string Shader::IMPORT_DIRECTIVE = "#import";
+
 
 void Shader::handleError(std::string name,GLuint shaderId)
 {
@@ -129,11 +131,27 @@ std::string Shader::readFile(std::string filePath)
 	std::string shaderCode = "";
 	std::string line = "";
 	while (std::getline(shaderFile,line)) {
+		//processDirectives(line);
 		shaderCode += line + "\n";
 	}
 
 	shaderFile.close();
 	return shaderCode;
+}
+
+void Shader::processDirectives(std::string & source)
+{
+	processImport(source);
+}
+
+void Shader::processImport(std::string & source)
+{
+	std::size_t offset = 0;
+	std::size_t pos = 0;
+	while ((pos = source.find(IMPORT_DIRECTIVE,pos+1)) != std::string::npos)
+	{
+
+	}
 }
 
 Shader::Shader()

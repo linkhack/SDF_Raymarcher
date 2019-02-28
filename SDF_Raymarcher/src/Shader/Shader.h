@@ -20,6 +20,11 @@ private:
 	GLint getUniformLocation(std::string location);
 
 	std::string readFile(std::string filePath);
+
+	void processDirectives(std::string& source);
+	void processImport(std::string& source);
+
+	static const std::string IMPORT_DIRECTIVE;
 public:
 	Shader();
 	Shader(std::string vertexShader, std::string fragmentShader);

@@ -12,6 +12,7 @@
 #include "Shader/Shader.h"
 #include "Geometry/Geometry.h"
 #include "Camera/Camera.h"
+#include "Light/LightManager.h"
 
 #define EXIT_WITH_ERROR(err) \
 	std::cout << "ERROR: " << err << std::endl; \
@@ -49,8 +50,8 @@ int main(int argc, char** argv)
 	/* --------------------------------------------- */
 
 
-	int window_width = 900;
-	int window_height = 900;
+	int window_width = 1920;
+	int window_height = 1080;
 	float fov = 60.0f;
 	float nearZ = 0.1f;
 	float farZ = 100.0f;
@@ -121,13 +122,22 @@ int main(int argc, char** argv)
 	{
 
 		//Shaders
+		std::vector<std::shared_ptr<Shader>> shaders;
 		std::shared_ptr<Shader> mainShader = std::make_shared<Shader>("base.vert","sdf_sphere.frag");
+		shaders.push_back(mainShader);
 		std::shared_ptr<Geometry> fullScreenQuad;
 		GeometryData quadGeom = ProceduralGeometry::createFullScreenQuad();
 		Geometry* quad = new ProceduralGeometry(glm::mat4(1.0f), quadGeom, mainShader);
 
 		//Camera
 		Camera* camera = new Camera(fov, float(window_width) / float(window_height), nearZ, farZ);
+
+		//Lights
+		LightManager* lightManager = new LightManager();
+		lightManager->createPointLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.8f*glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.1f, 0.4f, 1.0f));
+		lightManager->createDirectionalLight(glm::vec3(0.8f), glm::vec3(0.0f, -1.0f, -1.0f));
+
+		//Variables
 		double mouseX, mouseY;
 		double thisFrameTime = 0, oldFrameTime = 0, deltaT = 0;
 		double startTime = glfwGetTime();
@@ -147,11 +157,15 @@ int main(int argc, char** argv)
 			glfwGetCursorPos(window, &mouseX, &mouseY);
 			//update camera
 			camera->update(mouseX, mouseY, _zoom, _dragging, _strafing);
-
+			//update uniforms
 			mainShader->use();
 			mainShader->setUniform("time", (float)(thisFrameTime - startTime));
 			mainShader->setUniform("inversePVMatrix", camera->getInverseProjectionViewMatrix());
 			mainShader->setUniform("cameraPosition", camera->getPosition());
+			mainShader->setUniform("mouse_x", (float)mouseX/200.0f);
+			mainShader->setUniform("mouse_y", (float)mouseY/200.0f);
+			lightManager->setUniforms(shaders);
+
 			quad->draw();
 
 
@@ -167,6 +181,7 @@ int main(int argc, char** argv)
 
 		delete quad;
 		delete camera;
+		delete lightManager;
 	}
 
 	// Destroy context and exit
