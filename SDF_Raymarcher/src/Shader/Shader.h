@@ -25,6 +25,7 @@ private:
 	void processImport(std::string& source);
 
 	static const std::string IMPORT_DIRECTIVE;
+	static const std::string SHADER_DIRECTORY;
 public:
 	Shader();
 	Shader(std::string vertexShader, std::string fragmentShader);

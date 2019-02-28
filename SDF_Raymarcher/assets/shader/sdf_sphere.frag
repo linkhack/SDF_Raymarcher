@@ -9,6 +9,8 @@
 #define _POINT_LIGHTS_COUNT 1
 #define _SPOT_LIGHT_COUNT 1
 
+%%import sdf_functions.func
+
 
 // Light properties structs
 struct PointLight {
@@ -74,31 +76,6 @@ uniform float mouse_y;
 
 //Matrial constant
 const Material mat = {vec3(0.83137f,0.68627f,0.21568),vec3(0.1f),vec3(0.8f),vec3(0.1f),15.0f};
-
-
-float sphereSDF(vec3 pos){
-	return length(pos)-0.11;
-}
-
-/**
- * Signed distance function for a cube centered at the origin
- * with width = height = length = 2.0
- */
-float cubeSDF(vec3 p) {
-    // If d.x < 0, then -1 < p.x < 1, and same logic applies to p.y, p.z
-    // So if all components of d are negative, then p is inside the unit cube
-    vec3 d = abs(p) - vec3(1.0, 1.0, 1.0);
-    
-    // Assuming p is inside the cube, how far is it from the surface?
-    // Result will be negative or zero.
-    float insideDistance = min(max(d.x, max(d.y, d.z)), 0.0);
-    
-    // Assuming p is outside the cube, how far is it from the surface?
-    // Result will be positive or zero.
-    float outsideDistance = length(max(d, 0.0));
-    
-    return insideDistance + outsideDistance;
-}
 
 float sceneSDF(vec3 pos){
 	vec3 c = 0.4*vec3(4,4,3);

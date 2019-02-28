@@ -54,6 +54,7 @@
     <None Include="assets\shader\base.vert" />
     <None Include="assets\shader\checker_board.frag" />
     <None Include="assets\shader\ray_generation_test.frag" />
+    <None Include="assets\shader\sdf_functions.func" />
     <None Include="assets\shader\sdf_sphere.frag" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

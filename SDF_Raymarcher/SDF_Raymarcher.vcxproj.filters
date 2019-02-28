@@ -107,5 +107,6 @@
     <None Include="assets\shader\checker_board.frag" />
     <None Include="assets\shader\ray_generation_test.frag" />
     <None Include="assets\shader\sdf_sphere.frag" />
+    <None Include="assets\shader\sdf_functions.func" />
   </ItemGroup>
 </Project>
