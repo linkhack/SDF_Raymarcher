@@ -78,9 +78,9 @@ uniform float mouse_y;
 const Material mat = {vec3(0.83137f,0.68627f,0.21568),vec3(0.1f),vec3(0.8f),vec3(0.1f),15.0f};
 
 float sceneSDF(vec3 pos){
-	vec3 c = 0.4*vec3(4,4,3);
+	vec3 c = vec3(8,8,8);
 	vec3 q = mod(pos,c)-0.5f*c;
-    return sphereSDF( q );
+    return sphereSDF( q , 1.2f);
 }
 
 vec3 calculateNormal(vec3 p){

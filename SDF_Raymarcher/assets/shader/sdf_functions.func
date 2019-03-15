@@ -1,5 +1,5 @@
-float sphereSDF(vec3 pos){
-	return length(pos)-0.11;
+float sphereSDF(vec3 pos, float radius){
+	return length(pos)-radius;
 }
 
 /**
